@@ -1,11 +1,11 @@
 
 import './App.css'
-import { SpeechRecognition } from './SpeechRecognition'
+import { Start } from './Start'
 
 function App() {
 
   return (
-    <SpeechRecognition/>
+    <Start/>
   )
 }
 
