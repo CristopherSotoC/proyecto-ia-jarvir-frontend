@@ -7,10 +7,10 @@ export const Start = () => {
   const [botonVisible, setBotonVisible] = useState(true);
 
   const modelos = [
-    "una",
+    "Predecir si un cliente termina contrato",
     "Clasificar la calidad del vino",
     "Predecir precio de un automóvil",
-    "Predecir precio del aguacate",
+    "Predecir precio",
     "Predecir el porcentaje de grasa de un adulto",
     "Recomendar películas",
   ];
@@ -57,6 +57,27 @@ export const Start = () => {
     "Cargos Totales":               "",
   });
 
+  const avocadoOpciones = {
+    "Volumen Total":                ["Desde 400 hasta 1400 o más"],       // 40 000 - 140 000
+    "Aguacate 1":                   ["Desde 5 hasta 20 o más"],        // 500-2000
+    "Aguacate 2":                   ["Desde 400 hasta 1300 o más"],       // 40000-130000
+    "Aguacate 3":                   ["Desde 0.4 hasta 2 o más"],     // 40-200
+    "Año":                          ["Desde 2015 hasta 2018 "],         //
+    "Tipo":                         ["Convencional","Orgánico"],        
+    "Región":                       ["Albany","Atlanta","Boston","California","Chicago","Columbus","Denver","Orlando","Philadelphia","Detroit",
+                                      "Houston","Las Vegas","Los Angeles","Louisville","San Francisco","New York"],
+  };                    
+
+  const [avocado, setAvocado] = useState({
+    "Volumen Total":                 "", 
+    "Aguacate 1":                    "", 
+    "Aguacate 2":                    "", 
+    "Aguacate 3":                    "",
+    "Año":                           "", 
+    "Tipo":                          "",  
+    "Región":                        "",
+  });
+  
   const handleClick = () => {
     setBotonVisible(false);
     setMostrarSpeechRecognition(true);
@@ -68,9 +89,14 @@ export const Start = () => {
       {mostrarSpeechRecognition && 
       <SpeechRecognition 
           opciones={modelos} 
+
           churnCliente={churnCliente} 
           setchurnCliente={setchurnCliente} 
           churnOpciones={churnOpciones} 
+          
+          avocado={avocado} 
+          avocadoOpciones={avocadoOpciones}
+          setAvocado={setAvocado}
       />
       }
 

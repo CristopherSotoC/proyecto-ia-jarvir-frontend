@@ -11,6 +11,10 @@ export const SpeechRecognition = ({
   churnCliente,
   setchurnCliente,
   churnOpciones,
+
+  avocado,
+  avocadoOpciones,
+  setAvocado,
 }) => {
   const [textoReconocido, setTextoReconocido] = useState("");
   const [grabando, setGrabando] = useState(false);
@@ -57,8 +61,10 @@ export const SpeechRecognition = ({
   };
 
   useEffect(() => {
-    saludar();
-  }, []);
+    if (!opcionSeleccionada) {
+      saludar();
+    }
+  }, [opcionSeleccionada]);
 
   if (opcionSeleccionada) {
     switch (opcionSeleccionada.toLowerCase()) {
@@ -68,8 +74,9 @@ export const SpeechRecognition = ({
             <Churn
               instruction={opciones[0]}
               data={churnCliente}
-              setData={setchurnCliente}
               opciones={churnOpciones}
+              setData={setchurnCliente}
+              setBack={setOpcionSeleccionada}
             />
           </div>
         );
@@ -88,7 +95,13 @@ export const SpeechRecognition = ({
       case opciones[3].toLowerCase():
         return (
           <div>
-            <Avocado />
+            <Avocado
+              instruction={opciones[3]}
+              data={avocado}
+              opciones={avocadoOpciones}
+              setData={setAvocado}
+              setBack={setOpcionSeleccionada}
+            />
           </div>
         );
       case opciones[4].toLowerCase():

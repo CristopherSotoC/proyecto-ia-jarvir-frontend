@@ -5,6 +5,7 @@ export const Churn = ({
   data,
   setData,
   opciones,
+  setBack
 }) => {
   const [grabando, setGrabando] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -68,6 +69,9 @@ export const Churn = ({
         .map((result) => result[0].transcript)
         .join("");
       console.log(transcript);
+      if (transcript=="regresar a las opciones") {
+        setBack(null);
+      }
       // Comprobar si el usuario ha dicho una key
       Object.keys(data).forEach((key) => {
         if (transcript.includes(key.toLowerCase())) {
@@ -135,12 +139,12 @@ export const Churn = ({
   const listaValores = Object.entries(data).map(([clave, valor]) => {
     // Encuentra los valores correspondientes de `opciones` según la clave de `cliente`
     const opcionesValores = opciones[clave];
-
+  
     // Verifica si se encontraron los valores correspondientes en `opciones`
     if (opcionesValores) {
       // Devuelve una lista que contiene el nombre de la propiedad y los valores correspondientes
       return (
-        <div key={clave} style={{ height: "20px", width: "1000px" }}>
+        <div key={clave} style={{ height: clave === "Método de Pago" ? "50px" : "20px", width: "700px", marginTop:"2px" }}>
           <div
             style={{
               display: "flex",
@@ -151,7 +155,7 @@ export const Churn = ({
             <div style={{ width: "400px" }}>
               {clave}: {valor}
             </div>
-            <div style={{ width: "600px" }}>[{opcionesValores.join(", ")}]</div>
+            <div style={{ width: "300px" }}>[{opcionesValores.join(", ")}]</div>
           </div>
         </div>
       );
@@ -177,6 +181,7 @@ export const Churn = ({
       );
     }
   });
+  
 
   return (
     <div style={{ textAlign: "center" }}>
