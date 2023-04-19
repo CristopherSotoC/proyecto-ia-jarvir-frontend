@@ -6,19 +6,15 @@ import { Avocado } from "./modelscomponents/Avocado";
 import { Fat } from "./modelscomponents/Fat";
 import { Movie } from "./modelscomponents/Movie";
 
-export const SpeechRecognition = () => {
+export const SpeechRecognition = ({
+  opciones,
+  churnCliente,
+  setchurnCliente,
+  churnOpciones,
+}) => {
   const [textoReconocido, setTextoReconocido] = useState("");
   const [grabando, setGrabando] = useState(false);
   const [opcionSeleccionada, setOpcionSeleccionada] = useState(null);
-
-  const opciones = [
-    "Clasificar si un cliente se va a pasar de compañía",
-    "Clasificar la calidad del vino",
-    "Predecir precio de un automóvil",
-    "Predecir precio del aguacate",
-    "Predecir el porcentaje de grasa de un adulto",
-    "Recomendar películas",
-  ];
 
   const saludar = () => {
     const saludo = new SpeechSynthesisUtterance();
@@ -64,47 +60,51 @@ export const SpeechRecognition = () => {
     saludar();
   }, []);
 
-  useEffect(() => {
-    console.log(opcionSeleccionada);
-  }, [opcionSeleccionada]);
-
   if (opcionSeleccionada) {
-    if (opcionSeleccionada.toLowerCase() === opciones[0].toLowerCase()) {
-      return (
-        <div>
-          <Churn opcion={opciones[0]} />
-        </div>
-      );
-    } else if (opcionSeleccionada.toLowerCase() === opciones[1].toLowerCase()) {
-      return (
-        <div>
-          <Wine />
-        </div>
-      );
-    } else if (opcionSeleccionada.toLowerCase() === opciones[2].toLowerCase()) {
-      return (
-        <div>
-          <Car />
-        </div>
-      );
-    } else if (opcionSeleccionada.toLowerCase() === opciones[3].toLowerCase()) {
-      return (
-        <div>
-          <Avocado />
-        </div>
-      );
-    } else if (opcionSeleccionada.toLowerCase() === opciones[4].toLowerCase()) {
-      return (
-        <div>
-          <Fat/>
-        </div>
-      );
-    } else if (opcionSeleccionada.toLowerCase() === opciones[5].toLowerCase()) {
-      return (
-        <div>
-          <Movie/>
-        </div>
-      );
+    switch (opcionSeleccionada.toLowerCase()) {
+      case opciones[0].toLowerCase():
+        return (
+          <div>
+            <Churn
+              opcion={opciones[0]}
+              churnCliente={churnCliente}
+              setchurnCliente={setchurnCliente}
+              churnOpciones={churnOpciones}
+            />
+          </div>
+        );
+      case opciones[1].toLowerCase():
+        return (
+          <div>
+            <Wine />
+          </div>
+        );
+      case opciones[2].toLowerCase():
+        return (
+          <div>
+            <Car />
+          </div>
+        );
+      case opciones[3].toLowerCase():
+        return (
+          <div>
+            <Avocado />
+          </div>
+        );
+      case opciones[4].toLowerCase():
+        return (
+          <div>
+            <Fat />
+          </div>
+        );
+      case opciones[5].toLowerCase():
+        return (
+          <div>
+            <Movie />
+          </div>
+        );
+      default:
+        return null;
     }
   } else {
     return (
