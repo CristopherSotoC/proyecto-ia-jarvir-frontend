@@ -1,40 +1,39 @@
 import { useEffect, useState } from "react";
 
 export const Churn = ({
-  opcion,
-  churnCliente,
-  setchurnCliente,
-  churnOpciones,
+  instruction,
+  data,
+  setData,
+  opciones,
 }) => {
   const [grabando, setGrabando] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [respuesta, setRespuesta] = useState({});
 
-  const verificarCliente = () => {
-    const valoresCliente = Object.values(churnCliente);
+  const verificarData = () => {
+    const valoresCliente = Object.values(data);
     if (!valoresCliente.includes("")) {
       const jsonCliente = {
-        gender:            [churnOpciones["Género"                     ].indexOf(churnCliente["Género"                     ])],
-        SeniorCitizen:     [churnOpciones["Adulto Mayor"               ].indexOf(churnCliente["Adulto Mayor"               ])],
-        Partner:           [churnOpciones["Pareja"                     ].indexOf(churnCliente["Pareja"                     ])],
-        Dependents:        [churnOpciones["Dependiente"                ].indexOf(churnCliente["Dependiente"                ])],
-        tenure:            [churnOpciones["Afiliación"                 ].indexOf(churnCliente["Afiliación"                 ])],
-        PhoneService:      [churnOpciones["Servicio Móvil"             ].indexOf(churnCliente["Servicio Móvil"             ])],
-        MultipleLines:     [churnOpciones["Líneas Múltiples"           ].indexOf(churnCliente["Líneas Múltiples"           ])],
-        InternetService:   [churnOpciones["Servicio Internet"          ].indexOf(churnCliente["Servicio Internet"          ])],
-        OnlineSecurity:    [churnOpciones["Seguridad Online"           ].indexOf(churnCliente["Seguridad Online"           ])],
-        OnlineBackup:      [churnOpciones["Seguridad en Línea"         ].indexOf(churnCliente["Seguridad en Línea"         ])],
-        DeviceProtection:  [churnOpciones["Protección de Dispositivos" ].indexOf(churnCliente["Protección de Dispositivos" ])],
-        TechSupport:       [churnOpciones["Soporte Técnico"            ].indexOf(churnCliente["Soporte Técnico"            ])],
-        StreamingTV:       [churnOpciones["Televisión en Streaming"    ].indexOf(churnCliente["Televisión en Streaming"    ])],
-        StreamingMovies:   [churnOpciones["Películas en Streaming"     ].indexOf(churnCliente["Películas en Streaming"     ])],
-        Contract:          [churnOpciones["Tipo de Contrato"           ].indexOf(churnCliente["Tipo de Contrato"           ])],
-        PaperlessBilling:  [churnOpciones["Facturación Electrónica"    ].indexOf(churnCliente["Facturación Electrónica"    ])],
-        PaymentMethod:     [churnOpciones["Método de Pago"             ].indexOf(churnCliente["Método de Pago"             ])],
-        MonthlyCharges:    [churnOpciones["Cargos Mensuales"           ].indexOf(churnCliente["Cargos Mensuales"           ])],
-        TotalCharges:      [churnOpciones["Cargos Totales"             ].indexOf(churnCliente["Cargos Totales"             ])],
+        gender:            [opciones["Género"                     ].indexOf(data["Género"                     ])],
+        SeniorCitizen:     [opciones["Adulto Mayor"               ].indexOf(data["Adulto Mayor"               ])],
+        Partner:           [opciones["Pareja"                     ].indexOf(data["Pareja"                     ])],
+        Dependents:        [opciones["Dependiente"                ].indexOf(data["Dependiente"                ])],
+        tenure:            [opciones["Afiliación"                 ].indexOf(data["Afiliación"                 ])],
+        PhoneService:      [opciones["Servicio Móvil"             ].indexOf(data["Servicio Móvil"             ])],
+        MultipleLines:     [opciones["Líneas Múltiples"           ].indexOf(data["Líneas Múltiples"           ])],
+        InternetService:   [opciones["Servicio Internet"          ].indexOf(data["Servicio Internet"          ])],
+        OnlineSecurity:    [opciones["Seguridad Online"           ].indexOf(data["Seguridad Online"           ])],
+        OnlineBackup:      [opciones["Seguridad en Línea"         ].indexOf(data["Seguridad en Línea"         ])],
+        DeviceProtection:  [opciones["Protección de Dispositivos" ].indexOf(data["Protección de Dispositivos" ])],
+        TechSupport:       [opciones["Soporte Técnico"            ].indexOf(data["Soporte Técnico"            ])],
+        StreamingTV:       [opciones["Televisión en Streaming"    ].indexOf(data["Televisión en Streaming"    ])],
+        StreamingMovies:   [opciones["Películas en Streaming"     ].indexOf(data["Películas en Streaming"     ])],
+        Contract:          [opciones["Tipo de Contrato"           ].indexOf(data["Tipo de Contrato"           ])],
+        PaperlessBilling:  [opciones["Facturación Electrónica"    ].indexOf(data["Facturación Electrónica"    ])],
+        PaymentMethod:     [opciones["Método de Pago"             ].indexOf(data["Método de Pago"             ])],
+        MonthlyCharges:    [opciones["Cargos Mensuales"           ].indexOf(data["Cargos Mensuales"           ])],
+        TotalCharges:      [opciones["Cargos Totales"             ].indexOf(data["Cargos Totales"             ])],
       };
-
       fetch("http://127.0.0.1:5000/model/churn", {
         method: "POST",
         headers: {
@@ -46,7 +45,7 @@ export const Churn = ({
         .then((data) => setRespuesta(data));
     }
   };
-
+  
   const leer = (texto) => {
     const saludo = new SpeechSynthesisUtterance();
     saludo.text = texto;
@@ -70,7 +69,7 @@ export const Churn = ({
         .join("");
       console.log(transcript);
       // Comprobar si el usuario ha dicho una key
-      Object.keys(churnCliente).forEach((key) => {
+      Object.keys(data).forEach((key) => {
         if (transcript.includes(key.toLowerCase())) {
           lastKey = key;
         }
@@ -81,19 +80,19 @@ export const Churn = ({
           lastOption = transcript.replace(lastKey.toLowerCase(), "").trim();
           number = Number(lastOption);
         } else {
-          const index = churnOpciones[lastKey].findIndex((option) =>
+          const index = opciones[lastKey].findIndex((option) =>
             transcript.includes(option.toLowerCase())
           );
           console.log(index);
           if (index !== -1) {
-            lastOption = churnOpciones[lastKey][index];
+            lastOption = opciones[lastKey][index];
             number = lastOption;
           }
         }
       }
       if (number !== undefined) {
-        setchurnCliente({
-          ...churnCliente,
+         setData({
+          ...data,
           [lastKey]: [number],
         });
   
@@ -115,13 +114,13 @@ export const Churn = ({
   };
   
   useEffect(() => {
-    const saludo = `Has seleccionado la opción ${opcion}, para ello requiero que me brindes los siguientes datos`;
+    const saludo = `Has seleccionado la opción ${instruction}, para ello requiero que me brindes los siguientes datos`;
     leer(saludo);
   }, []);
 
   useEffect(() => {
-    verificarCliente();
-  }, [churnCliente]);
+    verificarData();
+  }, [data]);
 
   useEffect(() => {
     if (mounted && respuesta.churn) {
@@ -133,9 +132,9 @@ export const Churn = ({
     setMounted(true);
   }, []);
 
-  const listaValores = Object.entries(churnCliente).map(([clave, valor]) => {
+  const listaValores = Object.entries(data).map(([clave, valor]) => {
     // Encuentra los valores correspondientes de `opciones` según la clave de `cliente`
-    const opcionesValores = churnOpciones[clave];
+    const opcionesValores = opciones[clave];
 
     // Verifica si se encontraron los valores correspondientes en `opciones`
     if (opcionesValores) {

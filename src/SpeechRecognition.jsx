@@ -66,10 +66,10 @@ export const SpeechRecognition = ({
         return (
           <div>
             <Churn
-              opcion={opciones[0]}
-              churnCliente={churnCliente}
-              setchurnCliente={setchurnCliente}
-              churnOpciones={churnOpciones}
+              instruction={opciones[0]}
+              data={churnCliente}
+              setData={setchurnCliente}
+              opciones={churnOpciones}
             />
           </div>
         );
