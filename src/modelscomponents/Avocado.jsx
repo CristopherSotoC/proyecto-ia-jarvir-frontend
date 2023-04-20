@@ -4,42 +4,45 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
   const [grabando, setGrabando] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [respuesta, setRespuesta] = useState({});
+  const [respuestaLeida, setRespuestaLeida] = useState(false);
 
-  // const verificarData = () => {
-  //   const valoresCliente = Object.values(data);
-  //   if (!valoresCliente.includes("")) {
-  //     const jsonCliente = {
-  //       gender:            [opciones["Género"                     ].indexOf(data["Género"                     ])],
-  //       SeniorCitizen:     [opciones["Adulto Mayor"               ].indexOf(data["Adulto Mayor"               ])],
-  //       Partner:           [opciones["Pareja"                     ].indexOf(data["Pareja"                     ])],
-  //       Dependents:        [opciones["Dependiente"                ].indexOf(data["Dependiente"                ])],
-  //       tenure:            [opciones["Afiliación"                 ].indexOf(data["Afiliación"                 ])],
-  //       PhoneService:      [opciones["Servicio Móvil"             ].indexOf(data["Servicio Móvil"             ])],
-  //       MultipleLines:     [opciones["Líneas Múltiples"           ].indexOf(data["Líneas Múltiples"           ])],
-  //       InternetService:   [opciones["Servicio Internet"          ].indexOf(data["Servicio Internet"          ])],
-  //       OnlineSecurity:    [opciones["Seguridad Online"           ].indexOf(data["Seguridad Online"           ])],
-  //       OnlineBackup:      [opciones["Seguridad en Línea"         ].indexOf(data["Seguridad en Línea"         ])],
-  //       DeviceProtection:  [opciones["Protección de Dispositivos" ].indexOf(data["Protección de Dispositivos" ])],
-  //       TechSupport:       [opciones["Soporte Técnico"            ].indexOf(data["Soporte Técnico"            ])],
-  //       StreamingTV:       [opciones["Televisión en Streaming"    ].indexOf(data["Televisión en Streaming"    ])],
-  //       StreamingMovies:   [opciones["Películas en Streaming"     ].indexOf(data["Películas en Streaming"     ])],
-  //       Contract:          [opciones["Tipo de Contrato"           ].indexOf(data["Tipo de Contrato"           ])],
-  //       PaperlessBilling:  [opciones["Facturación Electrónica"    ].indexOf(data["Facturación Electrónica"    ])],
-  //       PaymentMethod:     [opciones["Método de Pago"             ].indexOf(data["Método de Pago"             ])],
-  //       MonthlyCharges:    [opciones["Cargos Mensuales"           ].indexOf(data["Cargos Mensuales"           ])],
-  //       TotalCharges:      [opciones["Cargos Totales"             ].indexOf(data["Cargos Totales"             ])],
-  //     };
-  //     fetch("http://127.0.0.1:5000/model/churn", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(jsonCliente),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => setRespuesta(data));
-  //   }
-  // };
+  const verificarData = () => {
+    const valoresCliente = Object.values(data);
+    let Tipo;
+    if (data["Tipo"] == "Convencional") {
+      Tipo = "conventional";
+    } else if (data["Tipo"] == "Orgánico") {
+      Tipo = "organic";
+    }
+
+    if (!valoresCliente.includes("")) {
+      const jsonCliente = {
+        "Total Volume":    [data["Volumen Total"                     ]*100],
+        4046:               data["Aguacate 1"                        ],
+        4225:              [data["Aguacate 2"                        ]*100], 
+        4770:               data["Aguacate 3"                        ],
+        year:               data["Año"                               ],
+        type:              [Tipo],                                      
+        region:             data["Región"                            ],
+       };
+      console.log(JSON.stringify(jsonCliente));
+
+      fetch("http://127.0.0.1:5000/model/avocado", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonCliente),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setRespuesta(data);
+          setRespuestaLeida(false); // Resetea la variable respuestaLeida
+          leer(data.price);
+          setRespuestaLeida(true); // Activa la variable respuestaLeida
+        });
+    }
+  };
 
   const leer = (texto) => {
     const saludo = new SpeechSynthesisUtterance();
@@ -59,11 +62,16 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
     let number;
 
     recognition.addEventListener("result", (event) => {
+      const isFinal = event.results[event.results.length - 1].isFinal;
+      if (!isFinal) {
+        // Si no es el resultado final, no hacemos las validaciones aún
+        return;
+      }
       const transcript = Array.from(event.results)
         .map((result) => result[0].transcript)
         .join("")
         .toLowerCase();
-        
+
       if (transcript == "regresar a las opciones") {
         setBack(null);
       }
@@ -75,16 +83,22 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
       });
       // Comprobar si el usuario ha dicho una opción válida después de la última key reconocida
       if (lastKey !== null) {
+        // Comprobar si el usuario ha dicho una key, con que requiere valor numerico
         if (
-          ["Volumen Total", "Aguacate 1", "Aguacate 2", "Aguacate 3", "Año"].includes(
-            lastKey
-          )
+          [
+            "Volumen Total",
+            "Aguacate 1",
+            "Aguacate 2",
+            "Aguacate 3",
+            "Año",
+          ].includes(lastKey)
         ) {
-          lastOption = transcript
-            .replace(lastKey.toLowerCase(), "")
-            .trim();
-
+          lastOption = transcript.replace(lastKey.toLowerCase(), "").trim();
           number = Number(lastOption);
+          // Verificar si se ha especificado una opción válida
+          if (isNaN(number)) {
+            number = undefined;
+          }
         } else {
           const index = opciones[lastKey].findIndex((option) =>
             transcript.includes(option.toLowerCase())
@@ -93,10 +107,12 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
           if (index !== -1) {
             lastOption = opciones[lastKey][index];
             number = lastOption;
+          } else {
+            number = undefined;
           }
         }
       }
-      if (number !== undefined) {
+      if (lastKey !== null && number !== undefined) {
         setData({
           ...data,
           [lastKey]: [number],
@@ -124,15 +140,20 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
     leer(saludo);
   }, []);
 
-  // useEffect(() => {
-  //   verificarData();
-  // }, [data]);
+  useEffect(() => {
+    verificarData();
+  }, [data]);
 
   useEffect(() => {
-    if (mounted && respuesta.churn) {
-      leer(respuesta.churn);
+    console.log(respuesta);
+  }, [respuesta]);
+
+  useEffect(() => {
+    if (respuesta && !respuestaLeida && mounted) {
+      setRespuestaLeida(true); // Activa la variable respuestaLeida
+      leer(respuesta.price);
     }
-  }, [respuesta, mounted]);
+  }, [respuesta, respuestaLeida]);
 
   useEffect(() => {
     setMounted(true);

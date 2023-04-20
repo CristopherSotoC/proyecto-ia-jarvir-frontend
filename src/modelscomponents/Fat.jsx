@@ -1,5 +1,6 @@
+import React from 'react'
 
-export const Fat = () => {
+export const Fat = ({ instruction, data, setData, opciones, setBack }) => {
   return (
     <div>Fat</div>
   )

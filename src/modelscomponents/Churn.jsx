@@ -65,6 +65,12 @@ export const Churn = ({
     let number;
   
     recognition.addEventListener("result", (event) => {
+      const isFinal = event.results[event.results.length - 1].isFinal;
+      if (!isFinal) {
+        // Si no es el resultado final, no hacemos las validaciones aún
+        return;
+      }
+      
       const transcript = Array.from(event.results)
         .map((result) => result[0].transcript)
         .join("");

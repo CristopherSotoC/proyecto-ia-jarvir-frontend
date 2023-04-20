@@ -15,6 +15,11 @@ export const SpeechRecognition = ({
   avocado,
   avocadoOpciones,
   setAvocado,
+
+  fat,
+  fatOpciones,
+  setFat,
+  
 }) => {
   const [textoReconocido, setTextoReconocido] = useState("");
   const [grabando, setGrabando] = useState(false);
@@ -107,7 +112,13 @@ export const SpeechRecognition = ({
       case opciones[4].toLowerCase():
         return (
           <div>
-            <Fat />
+            <Fat 
+            instruction={opciones[4]}
+            data={fat}
+            opciones={fatOpciones}
+            setData={setFat}
+            setBack={setOpcionSeleccionada}
+            />
           </div>
         );
       case opciones[5].toLowerCase():

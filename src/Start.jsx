@@ -10,7 +10,7 @@ export const Start = () => {
     "Predecir si un cliente termina contrato",
     "Clasificar la calidad del vino",
     "Predecir precio de un automóvil",
-    "Predecir precio",
+    "Predecir precio del aguacate",
     "Predecir el porcentaje de grasa de un adulto",
     "Recomendar películas",
   ];
@@ -59,10 +59,10 @@ export const Start = () => {
 
   const avocadoOpciones = {
     "Volumen Total":                ["Desde 400 hasta 1400 o más"],       // 40 000 - 140 000
-    "Aguacate 1":                   ["Desde 5 hasta 20 o más"],        // 500-2000
-    "Aguacate 2":                   ["Desde 400 hasta 1300 o más"],       // 40000-130000
-    "Aguacate 3":                   ["Desde 0.4 hasta 2 o más"],     // 40-200
-    "Año":                          ["Desde 2015 hasta 2018 "],         //
+    "Aguacate 1":                   ["Desde 500 hasta 2000 o más"],        
+    "Aguacate 2":                   ["Desde 400 hasta 1300 o más"],       // 40 000-130 000
+    "Aguacate 3":                   ["Desde 40 hasta 200 o más"],     
+    "Año":                          ["Desde 2015 hasta 2018 "],         
     "Tipo":                         ["Convencional","Orgánico"],        
     "Región":                       ["Albany","Atlanta","Boston","California","Chicago","Columbus","Denver","Orlando","Philadelphia","Detroit",
                                       "Houston","Las Vegas","Los Angeles","Louisville","San Francisco","New York"],
@@ -77,6 +77,34 @@ export const Start = () => {
     "Tipo":                          "",  
     "Región":                        "",
   });
+
+  const fatOpciones = {     
+    "Pecho":                         ["Desde 79 hasta 136 o más"], 
+    "Abdomen":                       ["Desde 69 hasta 148 o más"], 
+    "Muslo":                         ["Desde 400 hasta 1400 o más"], 
+    "Cadera":                        ["Desde 400 hasta 1400 o más"],
+    "Peso":                          ["Desde 400 hasta 1400 o más"], 
+    "Cuello":                        ["Desde 400 hasta 1400 o más"],  
+  };                    
+
+  const [fat, setFat] = useState({
+    "Pecho":                         "", 
+    "Abdomen":                       "", 
+    "Muslo":                         "", 
+    "Cadera":                        "",
+    "Peso":                          "", 
+    "Cuello":                        "",  
+  });
+  
+//   {
+//     "Chest": [95],
+//     "Abdomen": [85],
+//     "Thigh": [55],
+//     "Hip": [100],
+//     "Weight": [70],
+//     "Neck": [35]
+// }
+  
   
   const handleClick = () => {
     setBotonVisible(false);
@@ -97,6 +125,11 @@ export const Start = () => {
           avocado={avocado} 
           avocadoOpciones={avocadoOpciones}
           setAvocado={setAvocado}
+
+          fat={fat}
+          fatOpciones={fatOpciones}
+          setFat={setFat}
+
       />
       }
 
