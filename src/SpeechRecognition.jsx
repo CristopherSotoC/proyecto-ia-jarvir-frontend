@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Churn } from "./modelscomponents/Churn";
-import { Wine } from "./modelscomponents/Wine";
-import { Car } from "./modelscomponents/Car";
-import { Avocado } from "./modelscomponents/Avocado";
-import { Fat } from "./modelscomponents/Fat";
-import { Movie } from "./modelscomponents/Movie";
+
 
 export const SpeechRecognition = ({
   opciones,
-  churnCliente,
-  setchurnCliente,
-  churnOpciones,
 
   avocado,
   avocadoOpciones,
   setAvocado,
 
-  fat,
-  fatOpciones,
-  setFat,
+
   
 }) => {
   const [textoReconocido, setTextoReconocido] = useState("");
@@ -71,60 +61,45 @@ export const SpeechRecognition = ({
     }
   }, [opcionSeleccionada]);
 
+
+  
   if (opcionSeleccionada) {
     switch (opcionSeleccionada.toLowerCase()) {
       case opciones[0].toLowerCase():
         return (
           <div>
-            <Churn
-              instruction={opciones[0]}
-              data={churnCliente}
-              opciones={churnOpciones}
-              setData={setchurnCliente}
-              setBack={setOpcionSeleccionada}
-            />
           </div>
         );
       case opciones[1].toLowerCase():
         return (
           <div>
-            <Wine />
           </div>
         );
       case opciones[2].toLowerCase():
         return (
           <div>
-            <Car />
           </div>
         );
       case opciones[3].toLowerCase():
         return (
           <div>
-            <Avocado
+            {/* <Avocado
               instruction={opciones[3]}
               data={avocado}
               opciones={avocadoOpciones}
               setData={setAvocado}
               setBack={setOpcionSeleccionada}
-            />
+            /> */}
           </div>
         );
       case opciones[4].toLowerCase():
         return (
           <div>
-            <Fat 
-            instruction={opciones[4]}
-            data={fat}
-            opciones={fatOpciones}
-            setData={setFat}
-            setBack={setOpcionSeleccionada}
-            />
           </div>
         );
       case opciones[5].toLowerCase():
         return (
           <div>
-            <Movie />
           </div>
         );
       default:
