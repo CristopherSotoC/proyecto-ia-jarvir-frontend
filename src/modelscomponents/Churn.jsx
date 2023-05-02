@@ -13,6 +13,7 @@ export const Churn = ({
 
   const verificarData = () => {
     const valoresCliente = Object.values(data);
+
     if (!valoresCliente.includes("")) {
       const jsonCliente = {
         gender:            [opciones["Género"                     ].indexOf(data["Género"                     ])],
@@ -70,7 +71,7 @@ export const Churn = ({
         // Si no es el resultado final, no hacemos las validaciones aún
         return;
       }
-      
+
       const transcript = Array.from(event.results)
         .map((result) => result[0].transcript)
         .join("");
@@ -142,6 +143,7 @@ export const Churn = ({
     setMounted(true);
   }, []);
 
+  
   const listaValores = Object.entries(data).map(([clave, valor]) => {
     // Encuentra los valores correspondientes de `opciones` según la clave de `cliente`
     const opcionesValores = opciones[clave];
