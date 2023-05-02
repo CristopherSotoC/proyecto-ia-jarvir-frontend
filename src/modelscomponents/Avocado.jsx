@@ -9,6 +9,7 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
   const verificarData = () => {
     const valoresCliente = Object.values(data);
     let Tipo;
+
     if (data["Tipo"] == "Convencional") {
       Tipo = "conventional";
     } else if (data["Tipo"] == "Orgánico") {
@@ -67,6 +68,7 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
         // Si no es el resultado final, no hacemos las validaciones aún
         return;
       }
+
       const transcript = Array.from(event.results)
         .map((result) => result[0].transcript)
         .join("")
@@ -75,18 +77,20 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
       if (transcript == "regresar a las opciones") {
         setBack(null);
       }
+
       // Comprobar si el usuario ha dicho una key
       Object.keys(data).forEach((key) => {
         if (transcript.includes(key.toLowerCase())) {
           lastKey = key;
         }
       });
+
       // Comprobar si el usuario ha dicho una opción válida después de la última key reconocida
       if (lastKey !== null) {
         // Comprobar si el usuario ha dicho una key, con que requiere valor numerico
         if (
           [
-            "Volumen Total",
+            "Volumen Total", 
             "Aguacate 1",
             "Aguacate 2",
             "Aguacate 3",
@@ -95,6 +99,7 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
         ) {
           lastOption = transcript.replace(lastKey.toLowerCase(), "").trim();
           number = Number(lastOption);
+
           // Verificar si se ha especificado una opción válida
           if (isNaN(number)) {
             number = undefined;
@@ -143,10 +148,6 @@ export const Avocado = ({ instruction, data, setData, opciones, setBack }) => {
   useEffect(() => {
     verificarData();
   }, [data]);
-
-  useEffect(() => {
-    console.log(respuesta);
-  }, [respuesta]);
 
   useEffect(() => {
     if (respuesta && !respuestaLeida && mounted) {
