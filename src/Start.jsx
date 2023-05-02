@@ -96,16 +96,7 @@ export const Start = () => {
     "Cuello":                        "",  
   });
   
-//   {
-//     "Chest": [95],
-//     "Abdomen": [85],
-//     "Thigh": [55],
-//     "Hip": [100],
-//     "Weight": [70],
-//     "Neck": [35]
-// }
-  
-  
+
   const handleClick = () => {
     setBotonVisible(false);
     setMostrarSpeechRecognition(true);
