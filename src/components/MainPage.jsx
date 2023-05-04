@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Speech} from './Speech'
 import {Model} from './Model'
+import { FaceRecognition } from './FaceRecognition';
 
 const models = [
     "predecir si un cliente termina contrato",
@@ -142,6 +143,8 @@ export const MainPage = () => {
 
   return (
     <>
+
+    <FaceRecognition/>
 
     <h2>Esto es la pagina principal</h2>
 
