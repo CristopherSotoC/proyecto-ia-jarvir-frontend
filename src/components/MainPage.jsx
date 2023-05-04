@@ -12,7 +12,7 @@ const models = [
   ];
 
 const movieOptions = { 
-    "título" : "Any movie title",
+    "título" : "Any movie title with a year", 
 }
 
 const movieInitialState = { 
@@ -76,6 +76,7 @@ export const MainPage = () => {
     const [selectedModel, setSelectedModel] = useState('')
 
     const [peliculas, setPeliculas] = useState(movieInitialState)
+    // const [movieTitle, setMovieTitle] = useState('')
 
     const [carros, setCarros] = useState(carInitialState)
 
@@ -106,14 +107,15 @@ export const MainPage = () => {
 
         if ( selectedModel === 'recomendar películas' && Object.keys(movieOptions).some(option => text.toLocaleLowerCase().includes(option))) {
 
-            // todo: seleccionar una pelicula con mas de una palabra despues de la key
+            // seleccionar una pelicula con mas de una palabra despues de la key
             const key = Object.keys(movieOptions).find(option => text.toLocaleLowerCase().includes(option));
-            const word = getNextWordAfterKey(text.toLocaleLowerCase(), key)
-
+            const word1 = getNextWordAfterKey(text.toLocaleLowerCase(), key)
+            const word2 = getNextWordAfterKey(text.toLocaleLowerCase(), word1)
             setPeliculas({
                 ...peliculas,
-                [key]: word,
+                [key]: `${word1} (${word2})`,
             })
+
         }
         if ( selectedModel === 'predecir precio de un automóvil' && Object.keys(carOptions).some(option => text.toLocaleLowerCase().includes(option))) {
             
