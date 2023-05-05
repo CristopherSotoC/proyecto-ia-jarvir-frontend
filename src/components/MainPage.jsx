@@ -139,11 +139,6 @@ const getNextWordAfterKey = (text, key) => {
   }
 };
 
-const word1Capitalized = (word) => { 
-  return word.charAt(0).toUpperCase() + word.slice(1);
-};
-
-
 export const MainPage = () => {
   const [text, setText] = useState("");
 
@@ -159,8 +154,6 @@ export const MainPage = () => {
   const [sales, setSales] = useState(salesInitialState);
   const [fat, setFat] = useState(fatInitialState);
   const [churn, setChurn] = useState(churnInitialState);
-
-  const [flag, setFlag] = useState(true);
 
   const handleChildData = (data) => {
     setText(data);
@@ -189,12 +182,10 @@ export const MainPage = () => {
       setSales(salesInitialState);
       setFat(fatInitialState);
       setChurn(churnInitialState);
-    }
-    if (text.toLocaleLowerCase() === "enviar" && selectedModel) {
-      setSendModel(true);
+
     }
 
-    if (
+    else if (
       selectedModel === "recomendar películas" &&
       Object.keys(movieOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -202,48 +193,56 @@ export const MainPage = () => {
     ) {
       // seleccionar una pelicula con mas de una palabra despues de la key
       const key = Object.keys(movieOptions).find((option) =>
-      text.toLocaleLowerCase().includes(option)
-    );
-    
+        text.toLocaleLowerCase().includes(option)
+      );
+
       if (key) {
         const words = text
           .toLowerCase()
           .split(key)[1] // obtiene el texto después de la clave
           .trim() // elimina espacios en blanco al principio y al final
-          .split(' '); // divide el texto en palabras
-      
+          .split(" "); // divide el texto en palabras
+
         const movieTitle = words
           .map((word) => {
-            const commonWords = ['and', 'of', 'the', 'a', 'an', 'in', 'on', 'at'];
+            const commonWords = [
+              "and",
+              "of",
+              "the",
+              "a",
+              "an",
+              "in",
+              "on",
+              "at",
+            ];
             if (commonWords.includes(word)) {
               return word;
             } else {
               return word.charAt(0).toUpperCase() + word.slice(1); // capitaliza la primera letra de la palabra
             }
           })
-          .join(' ');
-      
+          .join(" ");
+
         // Busca el año en el título de la película
         const yearPattern = /\b(19|20)\d{2}\b/; // patrón para encontrar años
         const match = movieTitle.match(yearPattern);
         const year = match ? match[0] : null;
-      
+
         let titleWithoutYear = movieTitle;
         if (year) {
           // Elimina el año del título de la película
-          titleWithoutYear = movieTitle.replace(year, '').trim();
+          titleWithoutYear = movieTitle.replace(year, "").trim();
         }
-      
+
         if (year) {
-          console.log(`${titleWithoutYear} (${year})`);
-          setPeliculas({ 
+          setPeliculas({
             ...peliculas,
             [key]: `${titleWithoutYear} (${year})`,
           });
         }
       }
     }
-    if (
+    else if (
       selectedModel === "predecir precio de un automóvil" &&
       Object.keys(carOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -259,7 +258,7 @@ export const MainPage = () => {
         [key]: word,
       });
     }
-    if (
+    else if (
       selectedModel === "clasificar la calidad del vino" &&
       Object.keys(wineOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -276,7 +275,7 @@ export const MainPage = () => {
       });
     }
     ///////////////////////////////////////////////////////////////
-    if (
+    else if (
       selectedModel === "predecir si un cliente termina contrato" &&
       Object.keys(churnOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -292,7 +291,7 @@ export const MainPage = () => {
         [key]: [word],
       });
     }
-    if (
+    else if (
       selectedModel === "predecir precio del aguacate" &&
       Object.keys(avocadoOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -317,7 +316,7 @@ export const MainPage = () => {
         [key]: [word],
       });
     }
-    if (
+    else if (
       selectedModel === "predecir el porcentaje de grasa de un adulto" &&
       Object.keys(fatOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -333,7 +332,7 @@ export const MainPage = () => {
         [key]: [word],
       });
     }
-    if (
+    else if (
       selectedModel === "predecir ventas de walmart" &&
       Object.keys(salesOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -349,16 +348,14 @@ export const MainPage = () => {
         [key]: [word],
       });
     }
-
   }, [text]);
-
 
   return (
     <>
       <FaceRecognition />
 
       <div
-         style={{
+        style={{
           marginTop: "20px",
           position: "fixed",
           top: 1,
@@ -366,8 +363,7 @@ export const MainPage = () => {
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-          height:"100%"
-          
+          height: "100%",
         }}
       >
         <span className="my-span">Opciones</span>
@@ -406,9 +402,9 @@ export const MainPage = () => {
           selectedModel === "predecir ventas de walmart" ? (
           <Model options={salesOptions} state={sales} model={selectedModel} />
         ) : null}
-        </div>
+      </div>
 
-        <Speech onChildData={handleChildData} />
+      <Speech onChildData={handleChildData} />
     </>
   );
 };
