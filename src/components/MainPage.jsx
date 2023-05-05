@@ -141,7 +141,6 @@ const airOptions = {
   atraso: "format:  5.0, 11.8",
 };
 
-
 const airInitialState = {
   distancia: "",
   día: "",
@@ -206,7 +205,7 @@ export const MainPage = () => {
 
   const [air, setAir] = useState(airInitialState);
   const [hepatitis, setHepatitis] = useState(hepatitisInitialState);
-  const [covid, setcovid] = useState(covidInitialState);
+  const [covid, setCovid] = useState(covidInitialState);
 
   const handleChildData = (data) => {
     setText(data);
@@ -238,7 +237,7 @@ export const MainPage = () => {
 
       setAir(airInitialState);
       setHepatitis(hepatitisInitialState);
-      setcovid(covidInitialState);
+      setCovid(covidInitialState);
     } else if (
       selectedModel === "recomendar películas" &&
       Object.keys(movieOptions).some((option) =>
@@ -306,10 +305,12 @@ export const MainPage = () => {
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
-      setCarros({
-        ...carros,
-        [key]: word,
-      });
+      if (word) {
+        setCarros({
+          ...carros,
+          [key]: word,
+        });
+      }
     } else if (
       selectedModel === "clasificar la calidad del vino" &&
       Object.keys(wineOptions).some((option) =>
@@ -321,10 +322,12 @@ export const MainPage = () => {
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
-      setVino({
-        ...vino,
-        [key]: word,
-      });
+      if (word) {
+        setVino({
+          ...vino,
+          [key]: word,
+        });
+      }
     }
     ///////////////////////////////////////////////////////////////
     else if (
@@ -338,10 +341,12 @@ export const MainPage = () => {
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
-      setChurn({
-        ...churn,
-        [key]: [word],
-      });
+      if (word) {
+        setChurn({
+          ...churn,
+          [key]: [word],
+        });
+      }
     } else if (
       selectedModel === "predecir precio del aguacate" &&
       Object.keys(avocadoOptions).some((option) =>
@@ -362,10 +367,12 @@ export const MainPage = () => {
         word = "organic";
       }
 
-      setAvocado({
-        ...avocado,
-        [key]: [word],
-      });
+      if (word) {
+        setAvocado({
+          ...avocado,
+          [key]: [word],
+        });
+      }
     } else if (
       selectedModel === "predecir el porcentaje de grasa de un adulto" &&
       Object.keys(fatOptions).some((option) =>
@@ -377,10 +384,12 @@ export const MainPage = () => {
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
-      setFat({
-        ...fat,
-        [key]: [word],
-      });
+      if (word) {
+        setFat({
+          ...fat,
+          [key]: [word],
+        });
+      }
     } else if (
       selectedModel === "predecir ventas de walmart" &&
       Object.keys(salesOptions).some((option) =>
@@ -392,10 +401,12 @@ export const MainPage = () => {
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
-      setSales({
-        ...sales,
-        [key]: [word],
-      });
+      if (word) {
+        setSales({
+          ...sales,
+          [key]: [word],
+        });
+      }
     }
 
     ///////////////////////////////////////////////////////////////
@@ -410,12 +421,15 @@ export const MainPage = () => {
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key).replace(
         ",",
-        "");
+        ""
+      );
 
-      setAir({
-        ...air,
-        [key]: [word],
-      });
+      if (word) {
+        setAir({
+          ...air,
+          [key]: [word],
+        });
+      }
     } else if (
       selectedModel === "predecir tipo de hepatitis" &&
       Object.keys(hepatitisOptions).some((option) =>
@@ -427,10 +441,12 @@ export const MainPage = () => {
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
-      setHepatitis({
-        ...hepatitis,
-        [key]: [word],
-      });
+      if (word) {
+        setHepatitis({
+          ...hepatitis,
+          [key]: [word],
+        });
+      }
     } else if (
       selectedModel === "predecir cantidad de defunciones por covid" &&
       Object.keys(covidOptions).some((option) =>
@@ -442,10 +458,12 @@ export const MainPage = () => {
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
-      setcovid({
-        ...covid,
-        [key]: [word],
-      });
+      if (word) {
+        setCovid({
+          ...covid,
+          [key]: [word],
+        });
+      }
     }
   }, [text]);
 
@@ -514,11 +532,7 @@ export const MainPage = () => {
           <Model options={salesOptions} state={sales} model={selectedModel} />
         ) : !modelSelection &&
           selectedModel === "predecir atraso de una aerolínea" ? (
-          <Model
-            options={airOptions}
-            state={air}
-            model={selectedModel}
-          />
+          <Model options={airOptions} state={air} model={selectedModel} />
         ) : !modelSelection &&
           selectedModel === "predecir tipo de hepatitis" ? (
           <Model
