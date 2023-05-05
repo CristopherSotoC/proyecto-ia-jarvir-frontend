@@ -10,7 +10,7 @@ const modelsFetch = {
   "predecir el porcentaje de grasa de un adulto": "fat",
   "predecir ventas de walmart": "sales",
 
-  "predecir atraso de una aerolinea": "airlane",
+  "predecir atraso de una aerolÍnea": "airlane",
   "predecir tipo de hepatitis": "hepatitis",
   "predecir cantidad de defunciones por covid": "covid19",
 };
@@ -69,7 +69,7 @@ const OptionsForFetch = [
       mitad: "Semester",
       feriado: "IsHoliday",
     },
-    "predecir atraso de una aerolinea": {
+    "predecir atraso de una aerolÍnea": {
       distancia: "Distance",
       día: "DayOfWeek",
       espera: "DepTime",
