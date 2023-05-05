@@ -4,7 +4,8 @@ import { Speech } from "./Speech";
 const modelsFetch = {
   "recomendar películas": "movie",
   "predecir precio de un automóvil": "car",
-
+  "clasificar la calidad del vino": "wine",
+  
   "predecir si un cliente termina contrato": "churn",
   "predecir precio del aguacate": "avocado",
   "predecir el porcentaje de grasa de un adulto": "fat",
@@ -41,9 +42,9 @@ const OptionsForFetch = [
       totalidad: "TotalCharges",
     },
     "predecir precio del aguacate": {
-      4046:"4046",
-      4225: "4225",
-      4770: "4770",
+      medio  : "4046",
+      normal : "4225",
+      premium: "4770",
       volumen: "Total Volume",
       año: "year",
       tipo: "type",
@@ -101,6 +102,7 @@ export const Model = ({ options, state, model }) => {
         });
       }
       console.log(data);
+      console.log(JSON.stringify(data));
 
       // direccion peticion
       const dir = modelsFetch[model];

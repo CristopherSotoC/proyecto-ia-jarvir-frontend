@@ -58,20 +58,20 @@ const wineInitialState = {
 };
 
 const avocadoOptions = {
-  4046: "format: 1000-2000",
-  4225: "format: 100000-200000",
-  4770: "format: 100-1000",
+  medio: "format: 1000-2000",
+  normal: "format: 100000-200000",
+  premium: "format: 100-1000",
   volumen: "format:",
   año: "format: 2016,2017,2018",
-  tipo: "format: conventional,organic",
+  tipo: "format: convencional,orgánico",
   región:
     "format: Albany, Atlanta, Boston, California, Chicago, Denver, LosAngeles, Orlando, Philadelphia'",
 };
 
 const avocadoInitialState = {
-  4046: "",
-  4225: "",
-  4770: "",
+  medio: "",
+  normal: "",
+  premium: "",
   volumen: "",
   año: "",
   tipo: "",
@@ -252,7 +252,7 @@ export const MainPage = () => {
 
       setChurn({
         ...churn,
-        [key]: word,
+        [key]: [word],
       });
     }
     if (
@@ -264,12 +264,17 @@ export const MainPage = () => {
       const key = Object.keys(avocadoOptions).find((option) =>
         text.toLocaleLowerCase().includes(option)
       );
-      const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
-      word.replace(".", "");
+      let word = getNextWordAfterKey(text.toLocaleLowerCase(), key).replace(",", ".");
+
+      if (word === "convencional") {
+        word = "conventional";
+      } else if (word === "orgánico") {
+        word = "organic";
+      }
 
       setAvocado({
         ...avocado,
-        [key]: word,
+        [key]: [word],
       });
     }
     if (
@@ -285,7 +290,7 @@ export const MainPage = () => {
 
       setFat({
         ...fat,
-        [key]: word,
+        [key]: [word],
       });
     }
     if (
@@ -301,7 +306,7 @@ export const MainPage = () => {
 
       setSales({
         ...sales,
-        [key]: word,
+        [key]: [word],
       });
     }
   }, [text]);
