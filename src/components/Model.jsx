@@ -9,6 +9,10 @@ const modelsFetch = {
   "predecir precio del aguacate": "avocado",
   "predecir el porcentaje de grasa de un adulto": "fat",
   "predecir ventas de walmart": "sales",
+
+  "predecir atraso de una aerolinea": "airlane",
+  "predecir tipo de hepatitis": "hepatitis",
+  "predecir cantidad de defunciones por covid": "covid19",
 };
 
 const OptionsForFetch = [
@@ -65,6 +69,26 @@ const OptionsForFetch = [
       mitad: "Semester",
       feriado: "IsHoliday",
     },
+    "predecir atraso de una aerolinea": {
+      distancia: "Distance",
+      día: "DayOfWeek",
+      espera: "DepTime",
+      salida: "TaxiOut",
+      entrada: "TaxiIn",
+      atraso: "ArrDelay",
+    },
+    "predecir tipo de hepatitis": {
+      edad: "Age",
+      alanina: "ALT",
+      colesterol: "CHOL",
+      proteina: "PROT",
+      albúmina: "ALB",
+      aspartato: "AST",
+    },
+    "predecir cantidad de defunciones por covid19": {
+      confirmados: "Confirmed",
+      recuperados: "Recovered",
+    },
   },
 ];
 
@@ -88,9 +112,6 @@ export const Model = ({ options, state, model }) => {
         return [clave, valor];
       });
 
- 
-
-
       const data = Object.fromEntries(newArray);
 
       // cambiar data para que sea un objeto con las propiedades que necesita la petición
@@ -112,7 +133,6 @@ export const Model = ({ options, state, model }) => {
           }
         });
       }
-
 
       console.log(data);
       console.log(JSON.stringify(data));
@@ -139,20 +159,22 @@ export const Model = ({ options, state, model }) => {
     <>
       <div>
         {propNames.map((propName, i) => (
-          <p key={propName} style={{marginBottom: "1px",marginTop: "1px"}}>
+          <p key={propName} style={{ marginBottom: "1px", marginTop: "1px" }}>
             {i + 1}) {propName.charAt(0).toUpperCase() + propName.slice(1)}:{" "}
             {options[propName]}
           </p>
         ))}
 
-        <div style={{
-          marginTop: "20px",
-          display: "flex",
-          alignItems: "left",
-          flexDirection: "column",
-          height: "450px",
-          width: "400px",
-        }}>
+        <div
+          style={{
+            marginTop: "20px",
+            display: "flex",
+            alignItems: "left",
+            flexDirection: "column",
+            height: "450px",
+            width: "400px",
+          }}
+        >
           <span className="my-span">Datos</span>
 
           {Object.keys(state).map((key) => (

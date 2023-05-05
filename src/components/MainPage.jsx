@@ -11,6 +11,9 @@ const models = [
   "predecir el porcentaje de grasa de un adulto",
   "recomendar películas",
   "predecir ventas de walmart",
+  "predecir atraso de una aerolinea",
+  "predecir tipo de hepatitis",
+  "predecir cantidad de defunciones por covid",
 ];
 
 const movieOptions = {
@@ -129,6 +132,51 @@ const churnInitialState = {
   totalidad: "",
 };
 
+const airlaneOptions = {
+  distancia: "format:",
+  día: "format:",
+  espera: "format:",
+  salida: "format:",
+  entrada: "format:",
+  atraso: "format:",
+};
+
+const airlaneInitialState = {
+  distancia: "",
+  día: "",
+  espera: "",
+  salida: "",
+  entrada: "",
+  atraso: "",
+};
+const hepatitisOptions = {
+  edad: "format:",
+  alanina: "format:",
+  colesterol: "format:",
+  proteina: "format:",
+  albúmina: "format:",
+  aspartato: "format:",
+};
+
+const hepatitisInitialState = {
+  edad: "",
+  alanina: "",
+  colesterol: "",
+  proteina: "",
+  albúmina: "",
+  aspartato: "",
+};
+
+const covidOptions = {
+  confirmados: "format:",
+  recuperados: "format:",
+};
+
+const covidInitialState = {
+  confirmados: "",
+  recuperados: "",
+};
+
 const getNextWordAfterKey = (text, key) => {
   const words = text.split(" ");
   const index = words.indexOf(key);
@@ -154,6 +202,10 @@ export const MainPage = () => {
   const [sales, setSales] = useState(salesInitialState);
   const [fat, setFat] = useState(fatInitialState);
   const [churn, setChurn] = useState(churnInitialState);
+
+  const [airlane, setAirlane] = useState(airlaneInitialState);
+  const [hepatitis, setHepatitis] = useState(hepatitisInitialState);
+  const [covid, setcovid] = useState(covidInitialState);
 
   const handleChildData = (data) => {
     setText(data);
@@ -183,9 +235,10 @@ export const MainPage = () => {
       setFat(fatInitialState);
       setChurn(churnInitialState);
 
-    }
-
-    else if (
+      setAirlane(airlaneInitialState);
+      setHepatitis(hepatitisInitialState);
+      setcovid(covidInitialState);
+    } else if (
       selectedModel === "recomendar películas" &&
       Object.keys(movieOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -241,8 +294,7 @@ export const MainPage = () => {
           });
         }
       }
-    }
-    else if (
+    } else if (
       selectedModel === "predecir precio de un automóvil" &&
       Object.keys(carOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -257,8 +309,7 @@ export const MainPage = () => {
         ...carros,
         [key]: word,
       });
-    }
-    else if (
+    } else if (
       selectedModel === "clasificar la calidad del vino" &&
       Object.keys(wineOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -290,8 +341,7 @@ export const MainPage = () => {
         ...churn,
         [key]: [word],
       });
-    }
-    else if (
+    } else if (
       selectedModel === "predecir precio del aguacate" &&
       Object.keys(avocadoOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -315,8 +365,7 @@ export const MainPage = () => {
         ...avocado,
         [key]: [word],
       });
-    }
-    else if (
+    } else if (
       selectedModel === "predecir el porcentaje de grasa de un adulto" &&
       Object.keys(fatOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -331,8 +380,7 @@ export const MainPage = () => {
         ...fat,
         [key]: [word],
       });
-    }
-    else if (
+    } else if (
       selectedModel === "predecir ventas de walmart" &&
       Object.keys(salesOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
@@ -345,6 +393,54 @@ export const MainPage = () => {
 
       setSales({
         ...sales,
+        [key]: [word],
+      });
+    }
+
+    ///////////////////////////////////////////////////////////////
+    else if (
+      selectedModel === "predecir atraso de una aerolinea" &&
+      Object.keys(airlaneOptions).some((option) =>
+        text.toLocaleLowerCase().includes(option)
+      )
+    ) {
+      const key = Object.keys(airlaneOptions).find((option) =>
+        text.toLocaleLowerCase().includes(option)
+      );
+      const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
+
+      setAirlane({
+        ...airlane,
+        [key]: [word],
+      });
+    } else if (
+      selectedModel === "predecir tipo de hepatitis" &&
+      Object.keys(hepatitisOptions).some((option) =>
+        text.toLocaleLowerCase().includes(option)
+      )
+    ) {
+      const key = Object.keys(hepatitisOptions).find((option) =>
+        text.toLocaleLowerCase().includes(option)
+      );
+      const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
+
+      setHepatitis({
+        ...hepatitis,
+        [key]: [word],
+      });
+    } else if (
+      selectedModel === "predecir cantidad de defunciones por covid" &&
+      Object.keys(covidOptions).some((option) =>
+        text.toLocaleLowerCase().includes(option)
+      )
+    ) {
+      const key = Object.keys(covidOptions).find((option) =>
+        text.toLocaleLowerCase().includes(option)
+      );
+      const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
+
+      setcovid({
+        ...covid,
         [key]: [word],
       });
     }
@@ -375,6 +471,8 @@ export const MainPage = () => {
               <p
                 key={index}
                 style={{
+                  marginTop: "4px",
+                  marginBottom: "4px",
                   fontSize: "18px",
                 }}
               >
@@ -411,6 +509,23 @@ export const MainPage = () => {
         ) : !modelSelection &&
           selectedModel === "predecir ventas de walmart" ? (
           <Model options={salesOptions} state={sales} model={selectedModel} />
+        ) : !modelSelection &&
+          selectedModel === "predecir atraso de una aerolinea" ? (
+          <Model
+            options={airlaneOptions}
+            state={airlane}
+            model={selectedModel}
+          />
+        ) : !modelSelection &&
+          selectedModel === "predecir tipo de hepatitis" ? (
+          <Model
+            options={hepatitisOptions}
+            state={hepatitis}
+            model={selectedModel}
+          />
+        ) : !modelSelection &&
+          selectedModel === "predecir cantidad de defunciones por covid" ? (
+          <Model options={covidOptions} state={covid} model={selectedModel} />
         ) : null}
       </div>
 
