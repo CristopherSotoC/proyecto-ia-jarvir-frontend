@@ -265,6 +265,7 @@ export const MainPage = () => {
         text.toLocaleLowerCase().includes(option)
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
+      word.replace(".", "");
 
       setAvocado({
         ...avocado,
