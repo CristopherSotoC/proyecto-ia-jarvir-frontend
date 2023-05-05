@@ -68,7 +68,7 @@ const avocadoOptions = {
   año: "format: 2016,2017,2018",
   tipo: "format: convencional,orgánico",
   región:
-    "format: Albany, Atlanta, Boston, California, Chicago, Denver, LosAngeles, Orlando, Philadelphia'",
+    "format: Albany, Atlanta, Boston, California, Chicago, Denver, Orlando, Philadelphia'",
 };
 
 const avocadoInitialState = {
@@ -84,7 +84,7 @@ const avocadoInitialState = {
 const salesOptions = {
   tienda: "format: 1, 100, 1000",
   departamento: "format: 1-99",
-  mes: "format: 1-12",
+  mes: "format: 1-6",
   mitad: "format: 1, 2",
   feriado: "format: No=0, Si=1",
 };
@@ -356,21 +356,19 @@ export const MainPage = () => {
       const key = Object.keys(avocadoOptions).find((option) =>
         text.toLocaleLowerCase().includes(option)
       );
-      let word = getNextWordAfterKey(text.toLocaleLowerCase(), key).replace(
-        ",",
-        ""
-      );
-
-      if (word === "convencional") {
-        word = "conventional";
-      } else if (word === "orgánico") {
-        word = "organic";
-      }
-
+      let word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
       if (word) {
+        if (word === "convencional") {
+          word = "conventional";
+        } else if (word === "orgánico") {
+          word = "organic";
+        }
+        if (key === "región") {
+          word = word.charAt(0).toUpperCase() + word.slice(1);
+        }
         setAvocado({
           ...avocado,
-          [key]: [word],
+          [key]: [word.replace(",", "").replace(".", "")],
         });
       }
     } else if (
@@ -419,15 +417,12 @@ export const MainPage = () => {
       const key = Object.keys(airOptions).find((option) =>
         text.toLocaleLowerCase().includes(option)
       );
-      const word = getNextWordAfterKey(text.toLocaleLowerCase(), key).replace(
-        ",",
-        ""
-      );
+      const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
       if (word) {
         setAir({
           ...air,
-          [key]: [word],
+          [key]: [word.replace(",", "").replace(".", "")],
         });
       }
     } else if (
