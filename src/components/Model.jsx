@@ -5,7 +5,7 @@ const modelsFetch = {
   "recomendar películas": "movie",
   "predecir precio de un automóvil": "car",
   "clasificar la calidad del vino": "wine",
-  
+
   "predecir si un cliente termina contrato": "churn",
   "predecir precio del aguacate": "avocado",
   "predecir el porcentaje de grasa de un adulto": "fat",
@@ -42,8 +42,8 @@ const OptionsForFetch = [
       totalidad: "TotalCharges",
     },
     "predecir precio del aguacate": {
-      medio  : "4046",
-      normal : "4225",
+      medio: "4046",
+      normal: "4225",
       premium: "4770",
       volumen: "Total Volume",
       año: "year",
@@ -134,7 +134,6 @@ export const Model = ({ options, state, model }) => {
           {key}: {state[key]}
         </li>
       ))}
-
       {console.log(resp)}
     </div>
   );

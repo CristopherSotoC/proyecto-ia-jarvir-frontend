@@ -158,6 +158,8 @@ export const MainPage = () => {
   const [fat, setFat] = useState(fatInitialState);
   const [churn, setChurn] = useState(churnInitialState);
 
+  const [flag, setFlag] = useState(true);
+
   const handleChildData = (data) => {
     setText(data);
   };
@@ -175,6 +177,7 @@ export const MainPage = () => {
     if (text.toLocaleLowerCase() === "regresar" && selectedModel) {
       setSelectedModel("");
       setModelSelection(true);
+
       // reset states
       setPeliculas(movieInitialState);
       setCarros(carInitialState);
@@ -264,7 +267,10 @@ export const MainPage = () => {
       const key = Object.keys(avocadoOptions).find((option) =>
         text.toLocaleLowerCase().includes(option)
       );
-      let word = getNextWordAfterKey(text.toLocaleLowerCase(), key).replace(",", ".");
+      let word = getNextWordAfterKey(text.toLocaleLowerCase(), key).replace(
+        ",",
+        "."
+      );
 
       if (word === "convencional") {
         word = "conventional";
@@ -315,35 +321,53 @@ export const MainPage = () => {
     <>
       <FaceRecognition />
 
-      <h2>Esto es la pagina principal</h2>
+      <div
+        style={{
+          marginTop: "20px",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <span className="my-span">Opciones</span>
 
-      {modelSelection &&
-        models.map((model, index) => {
-          return <p key={index}> - {model}</p>;
-        })}
+        {modelSelection &&
+          models.map((model, index) => {
+            return <p key={index}> - {model}</p>;
+          })}
 
-      {!modelSelection && selectedModel === "recomendar películas" ? (
-        <Model options={movieOptions} state={peliculas} model={selectedModel} />
-      ) : !modelSelection &&
-        selectedModel === "predecir precio de un automóvil" ? (
-        <Model options={carOptions} state={carros} model={selectedModel} />
-      ) : !modelSelection &&
-        selectedModel === "clasificar la calidad del vino" ? (
-        <Model options={wineOptions} state={vino} model={selectedModel} />
-      ) : !modelSelection &&
-        selectedModel === "predecir si un cliente termina contrato" ? (
-        <Model options={churnOptions} state={churn} model={selectedModel} />
-      ) : !modelSelection &&
-        selectedModel === "predecir precio del aguacate" ? (
-        <Model options={avocadoOptions} state={avocado} model={selectedModel} />
-      ) : !modelSelection &&
-        selectedModel === "predecir el porcentaje de grasa de un adulto" ? (
-        <Model options={fatOptions} state={fat} model={selectedModel} />
-      ) : !modelSelection && selectedModel === "predecir ventas de walmart" ? (
-        <Model options={salesOptions} state={sales} model={selectedModel} />
-      ) : null}
+        {!modelSelection && selectedModel === "recomendar películas" ? (
+          <Model
+            options={movieOptions}
+            state={peliculas}
+            model={selectedModel}
+          />
+        ) : !modelSelection &&
+          selectedModel === "predecir precio de un automóvil" ? (
+          <Model options={carOptions} state={carros} model={selectedModel} />
+        ) : !modelSelection &&
+          selectedModel === "clasificar la calidad del vino" ? (
+          <Model options={wineOptions} state={vino} model={selectedModel} />
+        ) : !modelSelection &&
+          selectedModel === "predecir si un cliente termina contrato" ? (
+          <Model options={churnOptions} state={churn} model={selectedModel} />
+        ) : !modelSelection &&
+          selectedModel === "predecir precio del aguacate" ? (
+          <Model
+            options={avocadoOptions}
+            state={avocado}
+            model={selectedModel}
+          />
+        ) : !modelSelection &&
+          selectedModel === "predecir el porcentaje de grasa de un adulto" ? (
+          <Model options={fatOptions} state={fat} model={selectedModel} />
+        ) : !modelSelection &&
+          selectedModel === "predecir ventas de walmart" ? (
+          <Model options={salesOptions} state={sales} model={selectedModel} />
+        ) : null}
 
-      <Speech onChildData={handleChildData} />
+        <Speech onChildData={handleChildData} />
+      </div>
     </>
   );
 };
