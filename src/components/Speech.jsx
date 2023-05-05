@@ -48,17 +48,36 @@ export const Speech = (props) => {
           {listening ? "recording" : "start"}
         </button>
       </div>
-
-      <p
+      <div
         style={{
+          backgroundColor: "rgba(50, 40, 40, 0.1)",
           position: "fixed",
-          top: "65%",
-          left: "50%",
+          top: "27rem",
+          left: "13rem",
           transform: "translate(-50%, -50%)",
+          height: "100px",
+          width: "400px",
+          display: "flex",
+          justifyContent: "top",
+          borderRadius: "5px",
+          flexDirection: "column",
+          alignItems: "left",
         }}
       >
-        {transcript ? transcript : " "}
-      </p>
+        <span
+          style={{ fontWeight: "bold", fontSize: "24px", marginLeft: "10px" }}
+        >
+          {"Speech:"}
+        </span>
+        <p
+          style={{
+            fontSize: "16px",
+            marginLeft: "10px",
+          }}
+        >
+          {transcript ? transcript : " "}
+        </p>
+      </div>
     </div>
   );
 };

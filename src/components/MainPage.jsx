@@ -59,9 +59,9 @@ const wineInitialState = {
 
 const avocadoOptions = {
   medio: "format: 1000-2000",
-  normal: "format: 100000-200000",
+  normal: "format: 100000-150000",
   premium: "format: 100-1000",
-  volumen: "format:",
+  volumen: "format: 100000-200000",
   año: "format: 2016,2017,2018",
   tipo: "format: convencional,orgánico",
   región:
@@ -358,19 +358,29 @@ export const MainPage = () => {
         style={{
           marginTop: "20px",
           position: "fixed",
-          top: 1,
-          right: 20,
+          top: "5rem",
+          left: "70rem",
           display: "flex",
-          alignItems: "center",
+          alignItems: "left",
           flexDirection: "column",
           height: "100%",
+          width: "400px",
         }}
       >
         <span className="my-span">Opciones</span>
 
         {modelSelection &&
           models.map((model, index) => {
-            return <p key={index}> - {model}</p>;
+            return (
+              <p
+                key={index}
+                style={{
+                  fontSize: "18px",
+                }}
+              >
+                {index + 1}) {model.charAt(0).toUpperCase() + model.slice(1)}
+              </p>
+            );
           })}
 
         {!modelSelection && selectedModel === "recomendar películas" ? (
