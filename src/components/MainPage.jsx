@@ -11,7 +11,7 @@ const models = [
   "predecir el porcentaje de grasa de un adulto",
   "recomendar películas",
   "predecir ventas de walmart",
-  "predecir atraso de una aerolinea",
+  "predecir atraso de una aerolÍnea",
   "predecir tipo de hepatitis",
   "predecir cantidad de defunciones por covid",
 ];
@@ -133,13 +133,14 @@ const churnInitialState = {
 };
 
 const airlaneOptions = {
-  distancia: "format:",
-  día: "format:",
-  espera: "format:",
-  salida: "format:",
-  entrada: "format:",
-  atraso: "format:",
+  distancia: "format: 500, 800, 1100, 3000",
+  día: "format: [1-7]",
+  espera: "format: 620.5, 700.8, 900.0",
+  salida: "format: 3.0, 5.7, 7.2",
+  entrada: "format: 3.0, 5.7, 7.2",
+  atraso: "format: -20.0, -11.5, 5.0, 11.8",
 };
+
 
 const airlaneInitialState = {
   distancia: "",
@@ -150,12 +151,12 @@ const airlaneInitialState = {
   atraso: "",
 };
 const hepatitisOptions = {
-  edad: "format:",
-  alanina: "format:",
-  colesterol: "format:",
-  proteina: "format:",
-  albúmina: "format:",
-  aspartato: "format:",
+  edad: "format: 10, 15, 55",
+  alanina: "format: 4.5, 6.7, 8.5",
+  colesterol: "format: 3.2, 4.7, 8.8",
+  proteina: "format: 50, 70, 85",
+  albúmina: "format: 30, 40.7. 70",
+  aspartato: "format: 22.1, 30.6, 45.7",
 };
 
 const hepatitisInitialState = {
@@ -168,8 +169,8 @@ const hepatitisInitialState = {
 };
 
 const covidOptions = {
-  confirmados: "format:",
-  recuperados: "format:",
+  confirmados: "format: 10, 100, 1000",
+  recuperados: "format: 10, 100, 1000",
 };
 
 const covidInitialState = {
@@ -399,7 +400,7 @@ export const MainPage = () => {
 
     ///////////////////////////////////////////////////////////////
     else if (
-      selectedModel === "predecir atraso de una aerolinea" &&
+      selectedModel === "predecir atraso de una aerolÍnea" &&
       Object.keys(airlaneOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
       )
@@ -510,7 +511,7 @@ export const MainPage = () => {
           selectedModel === "predecir ventas de walmart" ? (
           <Model options={salesOptions} state={sales} model={selectedModel} />
         ) : !modelSelection &&
-          selectedModel === "predecir atraso de una aerolinea" ? (
+          selectedModel === "predecir atraso de una aerolÍnea" ? (
           <Model
             options={airlaneOptions}
             state={airlane}
