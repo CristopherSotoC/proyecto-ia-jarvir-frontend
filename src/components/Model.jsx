@@ -169,13 +169,14 @@ export const Model = ({ options, state, model }) => {
         >
           {"Respuesta:"}
         </span>
+        {console.log(resp)}
         <p
           style={{
             fontSize: "16px",
             marginLeft: "10px",
           }}
         >
-          {resp ? resp : " "}
+          {resp.resp ? resp.resp : " "}
         </p>
       </div>
     </>
