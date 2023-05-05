@@ -33,6 +33,7 @@ const OptionsForFetch = [
       densidad: "density",
       alcohol: "alcohol",
     },
+
     "predecir si un cliente termina contrato": {
       estabilidad: "tenure",
       ciberseguridad: "OnlineSecurity",
@@ -87,20 +88,33 @@ export const Model = ({ options, state, model }) => {
         }
         return [clave, valor];
       });
+
+ 
+
+
       const data = Object.fromEntries(newArray);
 
-      // cambiar data para que sea un objeto con las propiedades que necesita la peticion
+      // cambiar data para que sea un objeto con las propiedades que necesita la petición
       const modelOptions = OptionsForFetch.find((options) =>
         options.hasOwnProperty(model)
       );
       if (modelOptions) {
-        Object.keys(data).forEach((key) => {
+        Object.keys(data).forEach((key, index) => {
           if (modelOptions[model][key]) {
-            data[modelOptions[model][key]] = data[key];
-            delete data[key];
+            const newKey = modelOptions[model][key];
+            if (newKey !== key) {
+              data[newKey] = data[key];
+              delete data[key];
+            } else {
+              const currentValue = data[key];
+              delete data[key];
+              data[key] = currentValue;
+            }
           }
         });
       }
+
+
       console.log(data);
       console.log(JSON.stringify(data));
 

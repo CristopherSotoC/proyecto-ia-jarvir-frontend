@@ -139,6 +139,11 @@ const getNextWordAfterKey = (text, key) => {
   }
 };
 
+const word1Capitalized = (word) => { 
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
+
 export const MainPage = () => {
   const [text, setText] = useState("");
 
@@ -147,10 +152,7 @@ export const MainPage = () => {
   const [selectedModel, setSelectedModel] = useState("");
 
   const [peliculas, setPeliculas] = useState(movieInitialState);
-  // const [movieTitle, setMovieTitle] = useState('')
-
   const [carros, setCarros] = useState(carInitialState);
-
   const [vino, setVino] = useState(wineInitialState);
 
   const [avocado, setAvocado] = useState(avocadoInitialState);
@@ -200,14 +202,46 @@ export const MainPage = () => {
     ) {
       // seleccionar una pelicula con mas de una palabra despues de la key
       const key = Object.keys(movieOptions).find((option) =>
-        text.toLocaleLowerCase().includes(option)
-      );
-      const word1 = getNextWordAfterKey(text.toLocaleLowerCase(), key);
-      const word2 = getNextWordAfterKey(text.toLocaleLowerCase(), word1);
-      setPeliculas({
-        ...peliculas,
-        [key]: `${word1} (${word2})`,
-      });
+      text.toLocaleLowerCase().includes(option)
+    );
+    
+      if (key) {
+        const words = text
+          .toLowerCase()
+          .split(key)[1] // obtiene el texto después de la clave
+          .trim() // elimina espacios en blanco al principio y al final
+          .split(' '); // divide el texto en palabras
+      
+        const movieTitle = words
+          .map((word) => {
+            const commonWords = ['and', 'of', 'the', 'a', 'an', 'in', 'on', 'at'];
+            if (commonWords.includes(word)) {
+              return word;
+            } else {
+              return word.charAt(0).toUpperCase() + word.slice(1); // capitaliza la primera letra de la palabra
+            }
+          })
+          .join(' ');
+      
+        // Busca el año en el título de la película
+        const yearPattern = /\b(19|20)\d{2}\b/; // patrón para encontrar años
+        const match = movieTitle.match(yearPattern);
+        const year = match ? match[0] : null;
+      
+        let titleWithoutYear = movieTitle;
+        if (year) {
+          // Elimina el año del título de la película
+          titleWithoutYear = movieTitle.replace(year, '').trim();
+        }
+      
+        if (year) {
+          console.log(`${titleWithoutYear} (${year})`);
+          setPeliculas({ 
+            ...peliculas,
+            [key]: `${titleWithoutYear} (${year})`,
+          });
+        }
+      }
     }
     if (
       selectedModel === "predecir precio de un automóvil" &&
@@ -315,7 +349,9 @@ export const MainPage = () => {
         [key]: [word],
       });
     }
+
   }, [text]);
+
 
   return (
     <>
