@@ -58,25 +58,25 @@ const wineInitialState = {
 };
 
 const avocadoOptions = {
-  a: "format: 1000-2000",
-  b: "format: 100000-200000",
-  c: "format: 100-1000",
+  4046: "format: 1000-2000",
+  4225: "format: 100000-200000",
+  4770: "format: 100-1000",
   volumen: "format:",
   año: "format: 2016,2017,2018",
   tipo: "format: conventional,organic",
-  región: "format: Albany, Atlanta, Boston, California, Chicago, Denver, LosAngeles, Orlando, Philadelphia'",
+  región:
+    "format: Albany, Atlanta, Boston, California, Chicago, Denver, LosAngeles, Orlando, Philadelphia'",
 };
 
 const avocadoInitialState = {
-  a: "",
-  b: "",
-  c: "",
+  4046: "",
+  4225: "",
+  4770: "",
   volumen: "",
   año: "",
   tipo: "",
   región: "",
 };
-
 
 const salesOptions = {
   tienda: "format: 1, 100, 1000",
@@ -119,7 +119,6 @@ const churnOptions = {
   mensualidad: "format: 0-120",
   totalidad: "format:0-10000",
 };
-
 
 const churnInitialState = {
   estabilidad: "",

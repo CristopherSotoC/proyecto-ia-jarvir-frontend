@@ -41,9 +41,9 @@ const OptionsForFetch = [
       totalidad: "TotalCharges",
     },
     "predecir precio del aguacate": {
-      a: "4046",
-      b: "4225",
-      c: "4770",
+      4046:"4046",
+      4225: "4225",
+      4770: "4770",
       volumen: "Total Volume",
       año: "year",
       tipo: "type",
