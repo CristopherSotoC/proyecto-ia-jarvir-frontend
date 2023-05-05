@@ -1,6 +1,3 @@
-
-
-
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
@@ -22,9 +19,8 @@
   margin-bottom: 20px;
   font-size: 20px;
   font-weight: bold;
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
-
 
 .round-button {
   width: 140px;
@@ -43,13 +39,12 @@
 }
 
 .round-button:focus {
-  
   outline: none;
   border-color: transparent;
 }
 
 .round-button:hover {
-  
   outline: none;
   border-color: transparent;
 }
+

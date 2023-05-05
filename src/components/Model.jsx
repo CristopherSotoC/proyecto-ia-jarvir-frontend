@@ -5,7 +5,6 @@ const modelsFetch = {
   "recomendar películas": "movie",
   "predecir precio de un automóvil": "car",
   "clasificar la calidad del vino": "wine",
-
   "predecir si un cliente termina contrato": "churn",
   "predecir precio del aguacate": "avocado",
   "predecir el porcentaje de grasa de un adulto": "fat",
@@ -123,18 +122,62 @@ export const Model = ({ options, state, model }) => {
   }, [state]);
 
   return (
-    <div>
-      {propNames.map((propName) => (
-        <p key={propName}>
-          {propName}: {options[propName]}
+    <>
+      <div>
+        {propNames.map((propName, i) => (
+          <p key={propName} style={{marginBottom: "1px",marginTop: "1px"}}>
+            {i + 1}) {propName.charAt(0).toUpperCase() + propName.slice(1)}:{" "}
+            {options[propName]}
+          </p>
+        ))}
+
+        <div style={{
+          marginTop: "20px",
+          display: "flex",
+          alignItems: "left",
+          flexDirection: "column",
+          height: "450px",
+          width: "400px",
+        }}>
+          <span className="my-span">Datos</span>
+
+          {Object.keys(state).map((key) => (
+            <li key={key}>
+              {key.charAt(0).toUpperCase() + key.slice(1)}: {state[key]}
+            </li>
+          ))}
+        </div>
+      </div>
+      <div
+        style={{
+          backgroundColor: "rgba(50, 40, 40, 0.1)",
+          position: "fixed",
+          top: "33rem",
+          left: "13rem",
+          transform: "translate(-50%, -50%)",
+          height: "100px",
+          width: "400px",
+          display: "flex",
+          justifyContent: "top",
+          borderRadius: "5px",
+          flexDirection: "column",
+          alignItems: "left",
+        }}
+      >
+        <span
+          style={{ fontWeight: "bold", fontSize: "24px", marginLeft: "10px" }}
+        >
+          {"Respuesta:"}
+        </span>
+        <p
+          style={{
+            fontSize: "16px",
+            marginLeft: "10px",
+          }}
+        >
+          {resp ? resp : " "}
         </p>
-      ))}
-      {Object.keys(state).map((key) => (
-        <li key={key}>
-          {key}: {state[key]}
-        </li>
-      ))}
-      {console.log(resp)}
-    </div>
+      </div>
+    </>
   );
 };
