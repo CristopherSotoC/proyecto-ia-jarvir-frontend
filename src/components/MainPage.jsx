@@ -132,7 +132,7 @@ const churnInitialState = {
   totalidad: "",
 };
 
-const airlaneOptions = {
+const airOptions = {
   distancia: "format: 500, 800, 1100, 3000",
   día: "format: [1-7]",
   espera: "format: 620.5, 700.8, 900.0",
@@ -142,7 +142,7 @@ const airlaneOptions = {
 };
 
 
-const airlaneInitialState = {
+const airInitialState = {
   distancia: "",
   día: "",
   espera: "",
@@ -204,7 +204,7 @@ export const MainPage = () => {
   const [fat, setFat] = useState(fatInitialState);
   const [churn, setChurn] = useState(churnInitialState);
 
-  const [airlane, setAirlane] = useState(airlaneInitialState);
+  const [air, setAir] = useState(airInitialState);
   const [hepatitis, setHepatitis] = useState(hepatitisInitialState);
   const [covid, setcovid] = useState(covidInitialState);
 
@@ -236,7 +236,7 @@ export const MainPage = () => {
       setFat(fatInitialState);
       setChurn(churnInitialState);
 
-      setAirlane(airlaneInitialState);
+      setAir(airInitialState);
       setHepatitis(hepatitisInitialState);
       setcovid(covidInitialState);
     } else if (
@@ -401,17 +401,17 @@ export const MainPage = () => {
     ///////////////////////////////////////////////////////////////
     else if (
       selectedModel === "predecir atraso de una aerolÍnea" &&
-      Object.keys(airlaneOptions).some((option) =>
+      Object.keys(airOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
       )
     ) {
-      const key = Object.keys(airlaneOptions).find((option) =>
+      const key = Object.keys(airOptions).find((option) =>
         text.toLocaleLowerCase().includes(option)
       );
       const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
 
-      setAirlane({
-        ...airlane,
+      setAir({
+        ...air,
         [key]: [word],
       });
     } else if (
@@ -511,10 +511,10 @@ export const MainPage = () => {
           selectedModel === "predecir ventas de walmart" ? (
           <Model options={salesOptions} state={sales} model={selectedModel} />
         ) : !modelSelection &&
-          selectedModel === "predecir atraso de una aerolÍnea" ? (
+          selectedModel === "predecir atraso de una aerolínea" ? (
           <Model
-            options={airlaneOptions}
-            state={airlane}
+            options={airOptions}
+            state={air}
             model={selectedModel}
           />
         ) : !modelSelection &&
