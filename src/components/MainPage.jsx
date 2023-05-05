@@ -138,7 +138,7 @@ const airOptions = {
   espera: "format: 620.5, 700.8, 900.0",
   salida: "format: 3.0, 5.7, 7.2",
   entrada: "format: 3.0, 5.7, 7.2",
-  atraso: "format: -20.0, -11.5, 5.0, 11.8",
+  atraso: "format:  5.0, 11.8",
 };
 
 
@@ -154,7 +154,7 @@ const hepatitisOptions = {
   edad: "format: 10, 15, 55",
   alanina: "format: 4.5, 6.7, 8.5",
   colesterol: "format: 3.2, 4.7, 8.8",
-  proteina: "format: 50, 70, 85",
+  proteína: "format: 50, 70, 85",
   albúmina: "format: 30, 40.7. 70",
   aspartato: "format: 22.1, 30.6, 45.7",
 };
@@ -163,7 +163,7 @@ const hepatitisInitialState = {
   edad: "",
   alanina: "",
   colesterol: "",
-  proteina: "",
+  proteína: "",
   albúmina: "",
   aspartato: "",
 };
@@ -353,7 +353,7 @@ export const MainPage = () => {
       );
       let word = getNextWordAfterKey(text.toLocaleLowerCase(), key).replace(
         ",",
-        "."
+        ""
       );
 
       if (word === "convencional") {
@@ -400,7 +400,7 @@ export const MainPage = () => {
 
     ///////////////////////////////////////////////////////////////
     else if (
-      selectedModel === "predecir atraso de una aerolÍnea" &&
+      selectedModel === "predecir atraso de una aerolínea" &&
       Object.keys(airOptions).some((option) =>
         text.toLocaleLowerCase().includes(option)
       )
@@ -408,7 +408,9 @@ export const MainPage = () => {
       const key = Object.keys(airOptions).find((option) =>
         text.toLocaleLowerCase().includes(option)
       );
-      const word = getNextWordAfterKey(text.toLocaleLowerCase(), key);
+      const word = getNextWordAfterKey(text.toLocaleLowerCase(), key).replace(
+        ",",
+        "");
 
       setAir({
         ...air,
