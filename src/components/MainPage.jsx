@@ -322,11 +322,16 @@ export const MainPage = () => {
       <FaceRecognition />
 
       <div
-        style={{
+         style={{
           marginTop: "20px",
+          position: "fixed",
+          top: 1,
+          right: 20,
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
+          height:"100%"
+          
         }}
       >
         <span className="my-span">Opciones</span>
@@ -365,9 +370,9 @@ export const MainPage = () => {
           selectedModel === "predecir ventas de walmart" ? (
           <Model options={salesOptions} state={sales} model={selectedModel} />
         ) : null}
+        </div>
 
         <Speech onChildData={handleChildData} />
-      </div>
     </>
   );
 };

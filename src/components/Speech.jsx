@@ -32,19 +32,33 @@ export const Speech = (props) => {
   }, [listening, finalTranscript]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        
-      flexDirection: "column",
-      }}
-    >
-      <p>Microphone: {listening ? "on" : "off"}</p>
-      <button className="round-button" onClick={handleListen}>
-        {listening ? "stop" : "start"}
-      </button>
-      <p>{transcript}</p>
+    <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <button className="round-button" onClick={handleListen}>
+          {listening ? "recording" : "start"}
+        </button>
+      </div>
+
+      <p
+        style={{
+          position: "fixed",
+          top: "65%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        {transcript ? transcript : " "}
+      </p>
     </div>
   );
 };
